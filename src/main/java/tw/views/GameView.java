@@ -23,7 +23,7 @@ public class GameView {
     }
 
     public void showGameStatus(String status) {
-        System.out.println("Game Status: " + status);
+        System.out.print("Game Status: " + status);
     }
 
     public void showGuessHistory(List<GuessResult> guessResults) {
@@ -36,7 +36,7 @@ public class GameView {
     }
 
     public void showBegin() throws IOException {
-        System.out.println("------Guess Number Game, You have 6 chances to guess!  ------");
+        System.out.print("------Guess Number Game, You have 6 chances to guess!  ------");
 
     }
 }
