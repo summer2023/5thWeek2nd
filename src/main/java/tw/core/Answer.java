@@ -21,10 +21,6 @@ public class Answer {
         this.numList = Arrays.stream(NumStr.split(SPACE)).collect(Collectors.toList());
     }
 
-    public List<String> getNumList() {
-        return this.numList;
-    }
-
     public static Answer createAnswer(String inputStr) {
         Answer answer = new Answer();
         answer.setNumList(inputStr);

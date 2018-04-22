@@ -19,4 +19,15 @@ public class Record {
     public void increaseIncludeOnlyNum() {
         this.value[1]++;
     }
+
+    @Override
+    public boolean equals(Object anObject) {
+
+        if(anObject instanceof Record)
+        {
+            if(((Record)anObject).value[0] == this.value[0] && ((Record)anObject).value[1] == this.value[1])
+                return true;
+        }
+        return false;
+    }
 }

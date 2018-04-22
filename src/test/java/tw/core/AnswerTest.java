@@ -2,6 +2,8 @@ package tw.core;
 
 import org.junit.Test;
 import tw.core.exception.OutOfRangeAnswerException;
+import tw.core.model.Record;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -14,18 +16,6 @@ import java.util.stream.Collectors;
  */
 public class AnswerTest {
     private Answer answer = new Answer();
-
-    @Test
-    public void should_return_Answer_when_input_String() {
-        Answer answer1=answer.createAnswer("1234");
-        List<String> result=answer1.getNumList();
-        String string="1234";
-        Answer answer2=new Answer();
-        answer2.setNumList(Arrays.stream(string.split(" ")).collect(Collectors.toList()));
-        List<String> expectedResult=answer2.getNumList();
-
-        assertEquals(result,expectedResult);
-    }
 
     @Test
     public void should_return_numList_when_in_right_place() {
@@ -43,20 +33,51 @@ public class AnswerTest {
 
 
     @Test(expected=OutOfRangeAnswerException.class)
-    public void should_return_WrongInput_when_less_then_4_digits() throws OutOfRangeAnswerException {
+    public void should_return_false_when_less_then_4_digits() throws OutOfRangeAnswerException {
         Answer answer1=answer.createAnswer("1 2 1 2 ");
         answer1.validate();
     }
 
     @Test(expected=OutOfRangeAnswerException.class)
-    public void should_return_WrongInput_when_has_repeat_digit() throws OutOfRangeAnswerException {
+    public void should_return_false_when_has_repeat_digit() throws OutOfRangeAnswerException {
         Answer answer1=answer.createAnswer("12");
         answer1.validate();
     }
 
     @Test(expected=OutOfRangeAnswerException.class)
-    public void should_return_WrongInput_when_has_digit_bigger_than_maxint() throws OutOfRangeAnswerException {
+    public void should_return_false_when_has_digit_bigger_than_maxint() throws OutOfRangeAnswerException {
         Answer answer1=answer.createAnswer("1 2 23 4 5");
         answer1.validate();
+    }
+
+    @Test
+    public void should_return_record_when_answer_has_the_same_digit_in_same_position() {
+        Answer answer1=new Answer().createAnswer("1 2 3 4 ");
+        answer.setNumList("1 5 3 8");
+        Record expectedResult=new Record();
+        expectedResult.increaseCurrentNum();
+        expectedResult.increaseCurrentNum();
+        Record result=answer.check(answer1);
+        assertEquals(expectedResult,result);
+    }
+
+    @Test
+    public void should_return_record_when_answer_has_the_same_digit_in_different_position() {
+        Answer answer1=new Answer().createAnswer("1 2 3 4 ");
+        answer.setNumList("3 5 1 8");
+        Record expectedResult=new Record();
+        expectedResult.increaseIncludeOnlyNum();
+        expectedResult.increaseIncludeOnlyNum();
+        Record result=answer.check(answer1);
+        assertEquals(expectedResult,result);
+    }
+
+    @Test
+    public void should_return_record_when_answer_does_not_has_same_digit() {
+        Answer answer1=new Answer().createAnswer("1 2 3 4 ");
+        answer.setNumList("5 6 7 8 ");
+        Record expectedResult=new Record();
+        Record result=answer.check(answer1);
+        assertEquals(expectedResult,result);
     }
 }
