@@ -14,6 +14,4 @@ import java.util.List;
 public class GameTest {
     @Mock
     private Answer answer=Mockito.mock(Answer.class);
-
-   //将自己封装的类放到一个list中，在测试时怎么使用mock
 }

@@ -9,21 +9,20 @@ import java.util.Set;
  */
 public class RandomIntGenerator {
 
+    public static final String SPACE = " ";
+
     public RandomIntGenerator() {
     }
 
     public String generateNums(Integer digitmax, Integer numbersOfNeed) {
-
         if (digitmax < numbersOfNeed) {
             throw new IllegalArgumentException("Can't ask for more numbers than are available");
         }
-
         Random rng = new Random();
         Set<String> generated = new LinkedHashSet<>();
         while (generated.size() < numbersOfNeed) {
-            Integer next = rng.nextInt(digitmax);
-            generated.add(next.toString());
+            generated.add(String.valueOf(rng.nextInt(digitmax)));
         }
-        return String.join(" ", generated);
+        return String.join(SPACE, generated);
     }
 }

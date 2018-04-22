@@ -14,10 +14,11 @@ import static java.lang.Integer.parseInt;
  */
 public class Answer {
 
+    public static final String SPACE = " ";
     private List<String> numList;
 
-    public void setNumList(List<String> numList) {
-        this.numList = numList;
+    public void setNumList(String NumStr) {
+        this.numList = Arrays.stream(NumStr.split(SPACE)).collect(Collectors.toList());
     }
 
     public List<String> getNumList() {
@@ -26,8 +27,7 @@ public class Answer {
 
     public static Answer createAnswer(String inputStr) {
         Answer answer = new Answer();
-        List<String> inputList = Arrays.stream(inputStr.split(" ")).collect(Collectors.toList());
-        answer.setNumList(inputList);
+        answer.setNumList(inputStr);
         return answer;
     }
 
@@ -43,15 +43,12 @@ public class Answer {
 
     public Record check(Answer inputAnswer) {
         Record record = new Record();
-        this.numList.forEach(num -> {
-            int index = inputAnswer.getIndexOfNum(num);
-            if (index != -1) {
-                if (index == getIndexOfNum(num)) {
+        this.numList.stream().filter(num->inputAnswer.getIndexOfNum(num) != -1).forEach(num -> {
+                if (inputAnswer.getIndexOfNum(num) == getIndexOfNum(num)) {
                     record.increaseCurrentNum();
                 } else {
                     record.increaseIncludeOnlyNum();
                 }
-            }
         });
         return record;
     }
@@ -62,7 +59,7 @@ public class Answer {
 
     @Override
     public String toString() {
-        return String.join(" ", numList);
+        return String.join(SPACE, numList);
     }
 
 }

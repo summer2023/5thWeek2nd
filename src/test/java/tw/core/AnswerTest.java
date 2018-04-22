@@ -3,6 +3,8 @@ package tw.core;
 import org.junit.Test;
 import tw.core.exception.OutOfRangeAnswerException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,18 +28,35 @@ public class AnswerTest {
     }
 
     @Test
-    public void should_return_WrongInput_when_input_unformat() throws OutOfRangeAnswerException {
-        Answer answer1=answer.createAnswer("1212");
-        Answer answer2=answer.createAnswer("12");
-//        answer1.validate();
-//        answer2.validate();
+    public void should_return_numList_when_in_right_place() {
+        Answer answer1=answer.createAnswer("4 3 2 1 ");
+        String result=answer1.toString();
+        String expectedResult="4 3 2 1 ";
+        assertEquals(expectedResult,result);
     }
 
-    @Test
-    public void should_return_numList_when_toString() {
-        Answer answer1=answer.createAnswer("4321");
-        String result=answer1.toString();
-        String expectedResult="4321";
-        assertEquals(expectedResult,result);
+    @Test(expected=OutOfRangeAnswerException.class)
+    public void should_return_false_when_more_then_4_digits() throws OutOfRangeAnswerException {
+        Answer answer1=answer.createAnswer("4 3 2 1 5 ");
+        answer1.validate();
+    }
+
+
+    @Test(expected=OutOfRangeAnswerException.class)
+    public void should_return_WrongInput_when_less_then_4_digits() throws OutOfRangeAnswerException {
+        Answer answer1=answer.createAnswer("1 2 1 2 ");
+        answer1.validate();
+    }
+
+    @Test(expected=OutOfRangeAnswerException.class)
+    public void should_return_WrongInput_when_has_repeat_digit() throws OutOfRangeAnswerException {
+        Answer answer1=answer.createAnswer("12");
+        answer1.validate();
+    }
+
+    @Test(expected=OutOfRangeAnswerException.class)
+    public void should_return_WrongInput_when_has_digit_bigger_than_maxint() throws OutOfRangeAnswerException {
+        Answer answer1=answer.createAnswer("1 2 23 4 5");
+        answer1.validate();
     }
 }

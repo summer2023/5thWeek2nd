@@ -26,7 +26,7 @@ public class GameController {
     }
 
     public void play(InputCommand command) throws IOException {
-//若正确返回如果不足6次则继续否则失败
+
         if (game.checkCoutinue()) {
             GuessResult guessResult = game.guess(command.input());
             gameView.showGuessResult(guessResult);

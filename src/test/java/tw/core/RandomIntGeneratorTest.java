@@ -13,7 +13,7 @@ public class RandomIntGeneratorTest {
  private RandomIntGenerator randomIntGenerator=new RandomIntGenerator();
 
     @Test
-    public void should_return_randomInt() {
+    public void should_generateNums_return_length_of_correct() {
         //String randomNumStr = randomIntGenerator.generateNums(3, 4);
         String randomNumStr = randomIntGenerator.generateNums(9, 4);
         assertEquals(7, randomNumStr.length());

@@ -25,12 +25,6 @@ public class GuessInputCommand implements InputCommand {
     public Answer input() throws IOException {
         System.out.println("------Please input your answer as x x x x , x <10 ------");
         String input = bufferedReader.readLine();
-        Answer answer = null;
-        if (new InputValidator().validate(input)) {
-            answer = Answer.createAnswer(input);
-        } else {
-            answer = input();
-        }
-        return answer;
+        return new InputValidator().validate(input)?Answer.createAnswer(input):input();
     }
 }
