@@ -58,4 +58,7 @@ public class Answer {
         return String.join(SPACE, numList);
     }
 
+    public List<String> getNumList() {
+        return this.numList;
+    }
 }
